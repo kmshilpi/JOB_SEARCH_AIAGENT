@@ -61,7 +61,7 @@ if find_button:
             try:
                 # Backend API details
                 # Assuming backend runs on localhost:8000
-                api_url = "http://localhost:8000/search-jobs"
+                api_url = "https://job-search-aiagent.onrender.com/search-jobs"
                 payload = {
                     "role": role,
                     "skills": skills,
