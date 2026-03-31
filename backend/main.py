@@ -3,8 +3,8 @@ from pydantic import BaseModel
 from typing import List, Optional
 import os
 from dotenv import load_dotenv
-from .scraper import TavilyJobScraper
-from .ai_filter import AIFilter
+from scraper import TavilyJobScraper
+from ai_filter import AIFilter
 import logging
 
 # Load environment variables from .env file
