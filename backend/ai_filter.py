@@ -228,3 +228,94 @@ class AIFilter:
                 "experience": 0,
                 "location": "India"
             }
+
+    def get_career_advice(self, target_role: str, current_skills: list = None) -> Dict:
+        """
+        Provide career advice, skill gap analysis and roadmap for a target role.
+        """
+        if not self.api_key:
+            return {"error": "AI not configured"}
+
+        prompt = f"""
+        You are a world-class Senior Technical Career Coach. A candidate wants to become a **{target_role}**.
+        Their current skills (if any): {', '.join(current_skills) if current_skills else 'Not specified'}.
+        
+        Provide a highly detailed, actionable career plan in the following EXACT JSON format:
+        {{
+          "target_role": "{target_role}",
+          "must_have_skills": ["skill1", "skill2", "skill3", "skill4", "skill5"],
+          "good_to_have_skills": ["skill1", "skill2", "skill3"],
+          "missing_skills": ["skill1", "skill2"],
+          "roadmap": [
+            {{"phase": "Phase 1 (0-3 months)", "action": "Learn core concepts like Python/SQL/Selenium, complete 1 project", "resources": ["https://leetcode.com", "YouTube: Testing tutorials"]}},
+            {{"phase": "Phase 2 (3-6 months)", "action": "Build a portfolio with 2-3 automation projects", "resources": ["GitHub", "Udemy"]}},
+            {{"phase": "Phase 3 (6-12 months)", "action": "Apply for junior roles, contribute to open source", "resources": ["LinkedIn", "Naukri"]}}
+          ],
+          "avg_salary_range": "₹6-12 LPA (entry) to ₹20-40 LPA (senior)",
+          "top_companies_hiring": ["Google", "Amazon", "Flipkart", "Razorpay"],
+          "summary": "A 2-line motivational summary of the path to becoming a {target_role}."
+        }}
+        
+        Fill `missing_skills` with skills the candidate is MISSING compared to `must_have_skills`.
+        Return ONLY the JSON object, no extra text.
+        """
+
+        try:
+            logger.info(f"Generating career advice for: {target_role}")
+            response = self.client.models.generate_content(
+                model='gemini-flash-latest',
+                contents=prompt
+            )
+            result = response.text.strip()
+            if "```json" in result:
+                result = result.split("```json")[-1].split("```")[0]
+            elif "```" in result:
+                result = result.split("```")[1].split("```")[0]
+            return json.loads(result)
+        except Exception as e:
+            logger.error(f"Error generating career advice: {e}")
+            return {"error": str(e)}
+
+    def get_match_explanation(self, resume_text: str, job_title: str, job_snippet: str) -> Dict:
+        """
+        Generate a detailed AI explanation of why a job matches a candidate's resume.
+        """
+        if not self.api_key:
+            return {"explanation": "AI not configured", "match_reasons": [], "gaps": []}
+
+        prompt = f"""
+        You are an expert recruiter. Analyze the match between this CANDIDATE's resume and a JOB LISTING.
+        
+        CANDIDATE RESUME (excerpt):
+        {resume_text[:3000]}
+        
+        JOB TITLE: {job_title}
+        JOB SNIPPET: {job_snippet}
+        
+        Provide a sharp, specific analysis in this EXACT JSON format:
+        {{
+          "match_score": 85,
+          "why_this_job_matches": "2-3 sentence explanation of why this is a strong match",
+          "matching_skills": ["skill1", "skill2", "skill3"],
+          "skill_gaps": ["gap1", "gap2"],
+          "recommendation": "APPLY NOW / WORTH TRYING / STRETCH ROLE"
+        }}
+        
+        Return ONLY the JSON. No extra text.
+        """
+
+        try:
+            logger.info(f"Generating match explanation for: {job_title}")
+            response = self.client.models.generate_content(
+                model='gemini-flash-latest',
+                contents=prompt
+            )
+            result = response.text.strip()
+            if "```json" in result:
+                result = result.split("```json")[-1].split("```")[0]
+            elif "```" in result:
+                result = result.split("```")[1].split("```")[0]
+            return json.loads(result)
+        except Exception as e:
+            logger.error(f"Error generating match explanation: {e}")
+            return {"explanation": "Could not generate explanation.", "matching_skills": [], "skill_gaps": [], "recommendation": "N/A"}

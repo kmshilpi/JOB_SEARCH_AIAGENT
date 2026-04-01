@@ -1,30 +1,74 @@
-INFO:     Started server process [25111]
+INFO:     Started server process [25663]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:__main__:Extracted 6154 characters from shubham_tyagi_updated_cv (1) (1).pdf
-INFO:backend.ai_filter:Extracting parameters from resume text with AI (1.5-flash)...
+INFO:backend.ai_filter:Generating career advice for: senior automation engineer
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:50753 - "POST /extract-from-resume HTTP/1.1" 200 OK
-INFO:backend.scraper:Searching Naukri via Tavily: site:naukri.com "Senior SDET (Software Development Engineer in Test)" Python Selenium Robot Framework Java Rest API Testing BDD Jenkins GitLab TestNG Salesforce Automation TestRail SQL 7 years experience in Noida
-INFO:backend.scraper:Searching LinkedIn via Tavily: site:linkedin.com/jobs "Senior SDET (Software Development Engineer in Test)" Python Selenium Robot Framework Java Rest API Testing BDD Jenkins GitLab TestNG Salesforce Automation TestRail SQL 7 years experience in Noida
-INFO:backend.scraper:Searching Indeed via Tavily: site:indeed.com "Senior SDET (Software Development Engineer in Test)" Python Selenium Robot Framework Java Rest API Testing BDD Jenkins GitLab TestNG Salesforce Automation TestRail SQL 7 years experience in Noida
-INFO:backend.scraper:Successfully fetched 45 jobs total from multiple sources.
+INFO:     127.0.0.1:56005 - "POST /career-advisor HTTP/1.1" 200 OK
+INFO:backend.ai_filter:Generating career advice for: senior automation engineer
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56619 - "POST /career-advisor HTTP/1.1" 200 OK
+INFO:backend.ai_filter:Generating career advice for: senior automation engineer
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56871 - "POST /career-advisor HTTP/1.1" 200 OK
+INFO:backend.scraper:Searching Naukri via Tavily: site:naukri.com "qa lead" New Delhi 8 years experience
+INFO:backend.scraper:Searching LinkedIn via Tavily: site:linkedin.com/jobs "qa lead" New Delhi 8 years experience
+INFO:backend.scraper:Searching Indeed via Tavily: site:indeed.com "qa lead" New Delhi 8 years experience
+INFO:backend.scraper:Successfully fetched 44 jobs total from multiple sources.
 INFO:backend.ai_filter:Scoring jobs and extracting details with AI...
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:50784 - "POST /search-jobs HTTP/1.1" 200 OK
-INFO:__main__:Extracted 6154 characters from shubham_tyagi_updated_cv (1) (1).pdf
-INFO:backend.ai_filter:Extracting parameters from resume text with AI (1.5-flash)...
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:50884 - "POST /extract-from-resume HTTP/1.1" 200 OK
-INFO:backend.scraper:Searching Naukri via Tavily: site:naukri.com "Senior SDET (Software Development Engineer in Test)" Python Selenium Robot Framework Java REST API Testing TestNG Jenkins BDD Salesforce Automation SQL Git TestRail Automation Framework Design Postman 7 years experience in Noida
-INFO:backend.scraper:Searching LinkedIn via Tavily: site:linkedin.com/jobs "Senior SDET (Software Development Engineer in Test)" Python Selenium Robot Framework Java REST API Testing TestNG Jenkins BDD Salesforce Automation SQL Git TestRail Automation Framework Design Postman 7 years experience in Noida
-INFO:backend.scraper:Searching Indeed via Tavily: site:indeed.com "Senior SDET (Software Development Engineer in Test)" Python Selenium Robot Framework Java REST API Testing TestNG Jenkins BDD Salesforce Automation SQL Git TestRail Automation Framework Design Postman 7 years experience in Noida
-INFO:backend.scraper:Successfully fetched 13 jobs total from multiple sources.
+INFO:     127.0.0.1:57381 - "POST /search-jobs HTTP/1.1" 200 OK
+INFO:backend.scraper:Searching Naukri via Tavily: site:naukri.com "QA lead" python 9 years experience
+INFO:backend.scraper:Searching LinkedIn via Tavily: site:linkedin.com/jobs "QA lead" python 9 years experience
+INFO:backend.scraper:Searching Indeed via Tavily: site:indeed.com "QA lead" python 9 years experience
+INFO:backend.scraper:Successfully fetched 43 jobs total from multiple sources.
 INFO:backend.ai_filter:Scoring jobs and extracting details with AI...
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:50971 - "POST /search-jobs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59757 - "POST /search-jobs HTTP/1.1" 200 OK
+INFO:backend.scraper:Searching Naukri via Tavily: site:naukri.com "Automation" Python 6 years experience
+INFO:backend.scraper:Searching LinkedIn via Tavily: site:linkedin.com/jobs "Automation" Python 6 years experience
+INFO:backend.scraper:Searching Indeed via Tavily: site:indeed.com "Automation" Python 6 years experience
+INFO:backend.scraper:Successfully fetched 40 jobs total from multiple sources.
+INFO:backend.ai_filter:Scoring jobs and extracting details with AI...
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:61140 - "POST /search-jobs HTTP/1.1" 200 OK
+INFO:backend.scraper:Searching Naukri via Tavily: site:naukri.com "Automation" Python 7 years experience
+INFO:backend.scraper:Searching LinkedIn via Tavily: site:linkedin.com/jobs "Automation" Python 7 years experience
+INFO:backend.scraper:Searching Indeed via Tavily: site:indeed.com "Automation" Python 7 years experience
+INFO:backend.scraper:Successfully fetched 41 jobs total from multiple sources.
+INFO:backend.ai_filter:Scoring jobs and extracting details with AI...
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53561 - "POST /search-jobs HTTP/1.1" 200 OK
+INFO:backend.scraper:Searching Naukri via Tavily: site:naukri.com "Automation" Python 8 years experience
+INFO:backend.scraper:Searching LinkedIn via Tavily: site:linkedin.com/jobs "Automation" Python 8 years experience
+INFO:backend.scraper:Searching Indeed via Tavily: site:indeed.com "Automation" Python 8 years experience
+INFO:backend.scraper:Successfully fetched 41 jobs total from multiple sources.
+INFO:backend.ai_filter:Scoring jobs and extracting details with AI...
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55518 - "POST /search-jobs HTTP/1.1" 200 OK
+INFO:backend.scraper:Searching Naukri via Tavily: site:naukri.com "qa lead" python 6 years experience
+INFO:backend.scraper:Searching LinkedIn via Tavily: site:linkedin.com/jobs "qa lead" python 6 years experience
+INFO:backend.scraper:Searching Indeed via Tavily: site:indeed.com "qa lead" python 6 years experience
+INFO:backend.scraper:Successfully fetched 44 jobs total from multiple sources.
+INFO:backend.ai_filter:Scoring jobs and extracting details with AI...
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57063 - "POST /search-jobs HTTP/1.1" 200 OK
+INFO:__main__:Returning cached results for: Automation
+INFO:     127.0.0.1:57992 - "POST /search-jobs HTTP/1.1" 200 OK
+INFO:backend.scraper:Searching Naukri via Tavily: site:naukri.com "manual qa" jmeter 3 years experience
+INFO:backend.scraper:Searching LinkedIn via Tavily: site:linkedin.com/jobs "manual qa" jmeter 3 years experience
+INFO:backend.scraper:Searching Indeed via Tavily: site:indeed.com "manual qa" jmeter 3 years experience
+INFO:backend.scraper:Successfully fetched 43 jobs total from multiple sources.
+INFO:backend.ai_filter:Scoring jobs and extracting details with AI...
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:58249 - "POST /search-jobs HTTP/1.1" 200 OK

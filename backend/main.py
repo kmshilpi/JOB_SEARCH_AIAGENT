@@ -149,6 +149,51 @@ async def extract_from_resume(file: UploadFile = File(...)):
         logger.error(f"Resume extraction failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
+class CareerAdvisorRequest(BaseModel):
+    target_role: str
+    current_skills: Optional[List[str]] = None
+
+
+class MatchExplanationRequest(BaseModel):
+    resume_text: str
+    job_title: str
+    job_snippet: str
+
+
+@app.post("/career-advisor")
+async def career_advisor(request: CareerAdvisorRequest):
+    """
+    AI Career Advisor: skill gap analysis + roadmap for any target role.
+    """
+    try:
+        advice = ai_filter.get_career_advice(
+            target_role=request.target_role,
+            current_skills=request.current_skills
+        )
+        return advice
+    except Exception as e:
+        logger.error(f"Career advisor failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/match-explanation")
+async def match_explanation(request: MatchExplanationRequest):
+    """
+    AI Match Explanation: explain why a job matches a resume.
+    """
+    try:
+        explanation = ai_filter.get_match_explanation(
+            resume_text=request.resume_text,
+            job_title=request.job_title,
+            job_snippet=request.job_snippet
+        )
+        return explanation
+    except Exception as e:
+        logger.error(f"Match explanation failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
