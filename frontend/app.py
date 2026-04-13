@@ -116,7 +116,7 @@ with st.sidebar:
         with st.spinner("Reading your resume with AI..."):
             try:
                 files = {"file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
-                res = requests.post("http://localhost:8000/extract-from-resume", files=files)
+                res = requests.post("https://job-search-aiagent-2.onrender.com/extract-from-resume", files=files)
                 if res.status_code == 200:
                     params = res.json()
                     st.session_state.role_input = params.get("role", "")
@@ -140,7 +140,7 @@ with st.sidebar:
     if chat_input:
         with st.spinner("AI analyzing..."):
             try:
-                res = requests.post("http://localhost:8000/extract-params", json={"message": chat_input})
+                res = requests.post("https://job-search-aiagent-2.onrender.com/extract-params", json={"message": chat_input})
                 if res.status_code == 200:
                     params = res.json()
                     st.session_state.role_input = params.get("role", "")
@@ -191,7 +191,7 @@ with tab_jobs:
                         "experience": int(current_exp),
                         "location": current_loc if current_loc else None
                     }
-                    response = requests.post("http://localhost:8000/search-jobs", json=payload)
+                    response = requests.post("https://job-search-aiagent-2.onrender.com/search-jobs", json=payload)
 
                     if response.status_code == 200:
                         results = response.json().get("jobs", [])
@@ -281,10 +281,10 @@ with tab_jobs:
                                                         st.session_state.resume_raw,
                                                         "application/pdf"
                                                     )}
-                                                    res_text = requests.post("http://localhost:8000/extract-from-resume", files=files).text
+                                                    res_text = requests.post("https://job-search-aiagent-2.onrender.com/extract-from-resume", files=files).text
                                                     resume_text_raw = res_text  # Raw extracted text
 
-                                                    exp_res = requests.post("http://localhost:8000/match-explanation", json={
+                                                    exp_res = requests.post("https://job-search-aiagent-2.onrender.com/match-explanation", json={
                                                         "resume_text": current_skills + " " + current_role,
                                                         "job_title": job["title"],
                                                         "job_snippet": job.get("description", job["title"])[:500]
@@ -315,7 +315,7 @@ with tab_jobs:
                         st.error(f"Backend error: {response.text}")
                 except Exception as e:
                     st.error(f"Connection failed: {e}")
-                    st.info("Make sure the backend is running on http://localhost:8000")
+                    st.info("Make sure the backend is running on https://job-search-aiagent-2.onrender.com")
     else:
         st.info("👈 Fill your profile and click **Find Matching Jobs** — or upload your resume!")
 
@@ -342,7 +342,7 @@ with tab_advisor:
                     if not skills_for_advice and st.session_state.get("skills_input"):
                         skills_for_advice = [s.strip() for s in st.session_state.get("skills_input", "").split(",") if s.strip()]
 
-                    res = requests.post("http://localhost:8000/career-advisor", json={
+                    res = requests.post("https://job-search-aiagent-2.onrender.com/career-advisor", json={
                         "target_role": target_role,
                         "current_skills": skills_for_advice
                     })
@@ -416,6 +416,87 @@ with tab_advisor:
                 except Exception as e:
                     st.error(f"Failed to connect to backend: {e}")
 
+    # AI Architecture Flowchart (Moved to inside Career Advisor tab)
+    st.markdown("---")
+    st.subheader("⚙️ How It Works — Powered By Gemini AI")
+    ai_flow_html = """
+<style>
+.ai-flow-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 10px;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.flow-step {
+    text-align: center;
+    flex: 1;
+    position: relative;
+}
+.flow-icon {
+    font-size: 2.5em;
+    background: linear-gradient(45deg, #4a90e2, #9013fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+.flow-title {
+    font-weight: 700;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    color: #e0e0e0;
+}
+.flow-desc {
+    font-size: 0.75em;
+    color: #a0a0a0;
+}
+.flow-arrow {
+    flex: 0.2;
+    text-align: center;
+    font-size: 1.5em;
+    color: #555;
+    animation: moveRight 1.5s infinite;
+}
+@keyframes moveRight {
+    0% { transform: translateX(0); color: #555; }
+    50% { transform: translateX(5px); color: #4a90e2; }
+    100% { transform: translateX(0); color: #555; }
+}
+</style>
+
+<div class="ai-flow-container">
+    <div class="flow-step">
+        <div class="flow-icon">📄</div>
+        <div class="flow-title">1. Parse Profile</div>
+        <div class="flow-desc">Gemini AI extracts skills<br>& experience from Resume</div>
+    </div>
+    <div class="flow-arrow">➔</div>
+    <div class="flow-step">
+        <div class="flow-icon">🕸️</div>
+        <div class="flow-title">2. Web Scrape</div>
+        <div class="flow-desc">Tavily Search API finds<br>live jobs (Naukri/Indeed)</div>
+    </div>
+    <div class="flow-arrow">➔</div>
+    <div class="flow-step">
+        <div class="flow-icon">🧠</div>
+        <div class="flow-title">3. AI Matching</div>
+        <div class="flow-desc">Gemini analyzes Job vs Resume<br>for Match Score & Skill Gaps</div>
+    </div>
+    <div class="flow-arrow">➔</div>
+    <div class="flow-step">
+        <div class="flow-icon">🚀</div>
+        <div class="flow-title">4. Career Advisor</div>
+        <div class="flow-desc">Builds actionable roadmaps<br>to achieve your dream role</div>
+    </div>
+</div>
+"""
+    st.markdown(ai_flow_html, unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+
+
 # Footer
-st.markdown("---")
 st.markdown("Built with ❤️ using Streamlit, FastAPI, and Google Gemini.")
