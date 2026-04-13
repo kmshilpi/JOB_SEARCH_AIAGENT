@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 import os
@@ -18,6 +19,21 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="AI Job Finder API")
+
+# ─── CORS Middleware ────────────────────────────────────────
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],            # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],            # Allow all HTTP methods
+    allow_headers=["*"],            # Allow all headers
+)
+
+
+@app.get("/")
+async def root():
+    """Health check endpoint."""
+    return {"status": "ok", "message": "AI Job Finder API is running"}
 
 # Models for input/output
 class JobSearchRequest(BaseModel):
