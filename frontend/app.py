@@ -116,7 +116,7 @@ with st.sidebar:
         with st.spinner("Reading your resume with AI..."):
             try:
                 files = {"file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
-                res = requests.post("https://job-search-aiagent-2.onrender.com/extract-from-resume", files=files)
+                res = requests.post("http://localhost:8000/extract-from-resume", files=files)
                 if res.status_code == 200:
                     params = res.json()
                     st.session_state.role_input = params.get("role", "")
@@ -140,7 +140,7 @@ with st.sidebar:
     if chat_input:
         with st.spinner("AI analyzing..."):
             try:
-                res = requests.post("https://job-search-aiagent-2.onrender.com/extract-params", json={"message": chat_input})
+                res = requests.post("http://localhost:8000/extract-params", json={"message": chat_input})
                 if res.status_code == 200:
                     params = res.json()
                     st.session_state.role_input = params.get("role", "")
@@ -191,13 +191,18 @@ with tab_jobs:
                         "experience": int(current_exp),
                         "location": current_loc if current_loc else None
                     }
-                    response = requests.post("https://job-search-aiagent-2.onrender.com/search-jobs", json=payload)
+                    response = requests.post("http://localhost:8000/search-jobs", json=payload)
 
                     if response.status_code == 200:
-                        results = response.json().get("jobs", [])
+                        unfiltered_results = response.json().get("jobs", [])
+                        results = [
+                            job for job in unfiltered_results
+                            if job.get("location") and current_loc.lower() in job.get("location").lower()
+                        ]
                         if not results:
                             st.warning("No matching jobs found. Try adjusting your search.")
                         else:
+                            # st.write(results)
                             st.success(f"✅ Found **{len(results)}** matches from Naukri, LinkedIn & Indeed!")
 
                             # Store results for match explanation
@@ -281,10 +286,10 @@ with tab_jobs:
                                                         st.session_state.resume_raw,
                                                         "application/pdf"
                                                     )}
-                                                    res_text = requests.post("https://job-search-aiagent-2.onrender.com/extract-from-resume", files=files).text
+                                                    res_text = requests.post("http://localhost:8000/extract-from-resume", files=files).text
                                                     resume_text_raw = res_text  # Raw extracted text
 
-                                                    exp_res = requests.post("https://job-search-aiagent-2.onrender.com/match-explanation", json={
+                                                    exp_res = requests.post("http://localhost:8000/match-explanation", json={
                                                         "resume_text": current_skills + " " + current_role,
                                                         "job_title": job["title"],
                                                         "job_snippet": job.get("description", job["title"])[:500]
@@ -315,7 +320,7 @@ with tab_jobs:
                         st.error(f"Backend error: {response.text}")
                 except Exception as e:
                     st.error(f"Connection failed: {e}")
-                    st.info("Make sure the backend is running on https://job-search-aiagent-2.onrender.com")
+                    st.info("Make sure the backend is running on http://localhost:8000")
     else:
         st.info("👈 Fill your profile and click **Find Matching Jobs** — or upload your resume!")
 
@@ -342,7 +347,7 @@ with tab_advisor:
                     if not skills_for_advice and st.session_state.get("skills_input"):
                         skills_for_advice = [s.strip() for s in st.session_state.get("skills_input", "").split(",") if s.strip()]
 
-                    res = requests.post("https://job-search-aiagent-2.onrender.com/career-advisor", json={
+                    res = requests.post("http://localhost:8000/career-advisor", json={
                         "target_role": target_role,
                         "current_skills": skills_for_advice
                     })
